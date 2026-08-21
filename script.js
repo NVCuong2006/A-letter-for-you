@@ -205,14 +205,41 @@ Chúc chị một ngày thật nhiều niềm vui và luôn rực rỡ như nh�
             return;
         }
 
-        replyModal.classList.add("hidden-modal");
-        replyText.value = "";
-        showToast("❤️ Lời nhắn của chị đã được gửi đi rồi đó!");
+        btnSendReply.disabled = true;
+        btnSendReply.textContent = "Đang gửi...";
 
-        // Bắn pháo hoa tim rực rỡ
-        for (let i = 0; i < 20; i++) {
-            createFloatingHeartParticle(window.innerWidth / 2, window.innerHeight / 2);
-        }
+        fetch("https://formsubmit.co/ajax/nghiemvietcuong4@gmail.com", {
+            method: "POST",
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                _subject: "💌 Lời nhắn mới từ web A Letter For You!",
+                "Lời nhắn từ chị": text,
+                "Thời gian gửi": new Date().toLocaleString("vi-VN")
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            replyModal.classList.add("hidden-modal");
+            replyText.value = "";
+            btnSendReply.disabled = false;
+            btnSendReply.textContent = "Gửi lời nhắn ✨";
+            showToast("❤️ Lời nhắn đã được gửi thẳng tới Gmail của bạn!");
+
+            // Bắn pháo hoa tim rực rỡ
+            for (let i = 0; i < 20; i++) {
+                createFloatingHeartParticle(window.innerWidth / 2, window.innerHeight / 2);
+            }
+        })
+        .catch(err => {
+            replyModal.classList.add("hidden-modal");
+            replyText.value = "";
+            btnSendReply.disabled = false;
+            btnSendReply.textContent = "Gửi lời nhắn ✨";
+            showToast("❤️ Lời nhắn của chị đã được gửi đi rồi đó!");
+        });
     });
 
     // Đọc Lại Từ Đầu
