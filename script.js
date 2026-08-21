@@ -6,6 +6,7 @@ window.onload = () => {
     const appContainer = document.querySelector(".app-container");
 
     const step1 = document.getElementById("step1");
+    const stepMoments = document.getElementById("stepMoments");
     const step2 = document.getElementById("step2");
     const step3 = document.getElementById("step3");
 
@@ -14,6 +15,18 @@ window.onload = () => {
     const typewriterText = document.getElementById("typewriterText");
     const clickToSkip = document.getElementById("clickToSkip");
     const letterActions = document.getElementById("letterActions");
+
+    // Moments Elements
+    const momentBadge = document.getElementById("momentBadge");
+    const momentTitle = document.getElementById("momentTitle");
+    const momentImg = document.getElementById("momentImg");
+    const momentCaption = document.getElementById("momentCaption");
+    const momentText = document.getElementById("momentText");
+    const momentContent = document.getElementById("momentContent");
+    const btnPrevMoment = document.getElementById("btnPrevMoment");
+    const btnNextMoment = document.getElementById("btnNextMoment");
+    const nextBtnText = document.getElementById("nextBtnText");
+    const dots = document.querySelectorAll(".moments-dots .dot");
 
     const btnHeart = document.getElementById("btnHeart");
     const heartCount = document.getElementById("heartCount");
@@ -31,6 +44,91 @@ window.onload = () => {
 
     let countHearts = 0;
     let isMusicPlaying = false;
+
+    // Data Các Khoảnh Khắc Kỷ Niệm
+    const momentsData = [
+        {
+            title: "Lần Đầu Tiên... 🌸",
+            img: "images/0bfc32c3-3cb8-40a9-95ee-343e0bb2cc23.jpg",
+            caption: "Khoảnh khắc bắt đầu 🌸",
+            text: "Nhớ những ngày đầu tiên, từng tin nhắn hay câu chào của chị đều khiến em mỉm cười suốt cả ngày. Sự dịu dàng ấy thật sự đã để lại ấn tượng đặc biệt trong lòng em..."
+        },
+        {
+            title: "Những Niềm Vui Bình Dị... ✨",
+            img: "images/0bfc32c3-3cb8-40a9-95ee-343e0bb2cc23.jpg",
+            caption: "Nụ cười bình yên ✨",
+            text: "Có những câu chuyện dường như rất nhỏ nhặt, nhưng mỗi khi chia sẻ cùng chị, chúng lại trở thành những khoảnh khắc vô cùng ý nghĩa và ấm áp."
+        },
+        {
+            title: "Những Đêm Trò Chuyện... 🌙",
+            img: "images/0bfc32c3-3cb8-40a9-95ee-343e0bb2cc23.jpg",
+            caption: "Thời gian trôi thật nhanh... 🌙",
+            text: "Những cuộc trò chuyện kéo dài đến muộn, nơi em cảm nhận được sự lắng nghe, thấu hiểu và chân thành dịu dàng nhất từ chị."
+        },
+        {
+            title: "Cảm Ơn Vì Chị Đã Đến... 💖",
+            img: "images/0bfc32c3-3cb8-40a9-95ee-343e0bb2cc23.jpg",
+            caption: "Trân trọng từng giây phút 💖",
+            text: "Và điều tuyệt vời nhất là được biết chị, được quan tâm và đồng hành cùng chị qua từng ngày. Em đã chuẩn bị 1 bức thư bí mật dành riêng cho chị bên trong nè..."
+        }
+    ];
+
+    let currentMomentIndex = 0;
+
+    // Update Moment UI
+    function renderMoment(index) {
+        const data = momentsData[index];
+        momentContent.style.opacity = "0";
+        momentContent.style.transform = "translateY(10px)";
+
+        setTimeout(() => {
+            momentBadge.textContent = `Khoảnh khắc 0${index + 1} / 0${momentsData.length}`;
+            momentTitle.textContent = data.title;
+            momentImg.src = data.img;
+            momentCaption.textContent = data.caption;
+            momentText.textContent = data.text;
+
+            // Dots update
+            dots.forEach((dot, i) => {
+                if (i === index) dot.classList.add("active");
+                else dot.classList.remove("active");
+            });
+
+            // Prev button visibility
+            if (index === 0) {
+                btnPrevMoment.classList.add("hidden");
+            } else {
+                btnPrevMoment.classList.remove("hidden");
+            }
+
+            // Next button text
+            if (index === momentsData.length - 1) {
+                nextBtnText.textContent = "Mở bức thư bí mật 💌";
+            } else {
+                nextBtnText.textContent = "Khoảnh khắc tiếp ➡️";
+            }
+
+            momentContent.style.opacity = "1";
+            momentContent.style.transform = "translateY(0)";
+        }, 250);
+    }
+
+    btnNextMoment.addEventListener("click", () => {
+        if (currentMomentIndex < momentsData.length - 1) {
+            currentMomentIndex++;
+            renderMoment(currentMomentIndex);
+        } else {
+            // Chuyển sang Phong Bì Thư 3D
+            switchStep(stepMoments, step2);
+        }
+    });
+
+    btnPrevMoment.addEventListener("click", () => {
+        if (currentMomentIndex > 0) {
+            currentMomentIndex--;
+            renderMoment(currentMomentIndex);
+        }
+    });
 
     // -------------------------------------------------------------
     // 1. Quản lý Âm Nhạc
@@ -50,13 +148,13 @@ window.onload = () => {
 
     musicToggle.addEventListener("click", toggleMusic);
 
-    // Tự động phát nhạc ở lượt tương tác đầu tiên nếu trình duyệt chặn autostart
+    // Tự động phát nhạc ở lượt tương tác đầu tiên
     document.body.addEventListener("click", () => {
         if (!isMusicPlaying && bgMusic.paused) {
             bgMusic.play().then(() => {
                 musicToggle.classList.add("playing");
                 isMusicPlaying = true;
-            }).catch(() => { });
+            }).catch(() => {});
         }
     }, { once: true });
 
@@ -97,9 +195,11 @@ window.onload = () => {
         }, 400);
     }
 
-    // Bấm "Bấm để mở thư" từ Step 1 sang Step 2
+    // Bấm "Khám phá khoảnh khắc" từ Step 1 sang StepMoments
     btnOpenIntro.addEventListener("click", () => {
-        switchStep(step1, step2);
+        currentMomentIndex = 0;
+        renderMoment(0);
+        switchStep(step1, stepMoments);
     });
 
     // Mở Phong Bì 3D từ Step 2 sang Step 3

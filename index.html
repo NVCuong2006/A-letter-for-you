@@ -54,19 +54,57 @@
                 <h1>Chị có 1 tin nhắn quan trọng</h1>
                 <p class="message">
                     Có vài điều em muốn nói với chị,<br>
-                    nhưng em muốn gửi trao theo một cách đặc biệt hơn một chút... ✨
+                    nhưng em muốn gửi trao qua từng khoảnh khắc đặc biệt... ✨
                 </p>
                 <button id="btnOpenIntro" class="btn-primary">
-                    <span>Bấm để mở thư</span>
-                    <span class="btn-icon">💌</span>
+                    <span>Khám phá khoảnh khắc</span>
+                    <span class="btn-icon">🌸</span>
                 </button>
             </div>
         </section>
 
-        <!-- Màn 2: Phong Bì Thư 3D -->
+        <!-- Màn 2: Hành Trình Khoảnh Khắc Kỷ Niệm (Storybook Moments) -->
+        <section id="stepMoments" class="page">
+            <div class="moments-card">
+                <div class="moments-header">
+                    <span id="momentBadge" class="moment-badge">Khoảnh khắc 01 / 04</span>
+                    <div class="moments-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+
+                <div id="momentContent" class="moment-body">
+                    <h2 id="momentTitle" class="moment-title">Lần Đầu Tiên... 🌸</h2>
+                    
+                    <div class="photo-frame moment-photo-frame">
+                        <div class="tape top-tape"></div>
+                        <img id="momentImg" src="images/0bfc32c3-3cb8-40a9-95ee-343e0bb2cc23.jpg" alt="Khoảnh khắc" class="letter-photo">
+                        <p id="momentCaption" class="photo-caption">Khoảnh khắc đáng nhớ 🌸</p>
+                    </div>
+
+                    <p id="momentText" class="moment-text">
+                        Nhớ những ngày đầu tiên, từng tin nhắn hay câu chào của chị đều khiến em mỉm cười suốt cả ngày. Sự dịu dàng ấy thật sự đã ở lại trong lòng em...
+                    </p>
+                </div>
+
+                <div class="moments-footer">
+                    <button id="btnPrevMoment" class="btn-secondary hidden">
+                        <span>⬅️ Trước</span>
+                    </button>
+                    <button id="btnNextMoment" class="btn-primary">
+                        <span id="nextBtnText">Khoảnh khắc tiếp ➡️</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Màn 3: Phong Bì Thư 3D -->
         <section id="step2" class="page">
             <div class="envelope-wrapper">
-                <p class="envelope-hint">✨ Nhấp vào phong bì để mở bức thư nhé ✨</p>
+                <p class="envelope-hint">✨ Nhấp vào phong bì để mở bức thư bí mật nhé ✨</p>
                 <div class="envelope" id="envelope">
                     <div class="envelope-back"></div>
                     <div class="letter-preview">
@@ -81,7 +119,7 @@
             </div>
         </section>
 
-        <!-- Màn 3: Bức Thư Tâm Sự Chính -->
+        <!-- Màn 4: Bức Thư Tâm Sự Chính -->
         <section id="step3" class="page">
             <div class="letter-paper">
                 <div class="paper-header">
@@ -95,7 +133,7 @@
                 <div class="photo-frame">
                     <div class="tape top-tape"></div>
                     <img src="images/0bfc32c3-3cb8-40a9-95ee-343e0bb2cc23.jpg" alt="Khoảnh khắc đáng nhớ" class="letter-photo">
-                    <p class="photo-caption">Khoảnh khắc đáng nhớ nhất 🌸</p>
+                    <p class="photo-caption">Gửi trọn tình cảm 💖</p>
                 </div>
 
                 <!-- Khung gõ chữ tâm sự (Typewriter) -->

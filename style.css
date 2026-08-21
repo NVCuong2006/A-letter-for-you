@@ -222,33 +222,111 @@ h1 {
   margin-bottom: 28px;
 }
 
-/* Primary Button */
-.btn-primary {
+/* Secondary Button */
+.btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 15px 34px;
-  border: none;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1px solid rgba(229, 133, 128, 0.4);
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, #e06d67 100%);
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--text-main);
   font-family: var(--font-main);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(229, 133, 128, 0.35);
+  transition: all 0.25s ease;
+}
+
+.btn-secondary:hover {
+  background: #ffffff;
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/* Step 2: Moments Card Storybook */
+.moments-card {
+  width: 100%;
+  padding: 32px 24px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(15px);
+  border-radius: 32px;
+  box-shadow: var(--shadow-deep);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.moments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.moment-badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: #fff3f1;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.moments-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e2d5c8;
   transition: all 0.3s ease;
 }
 
-.btn-primary:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 15px 30px rgba(229, 133, 128, 0.45);
+.dot.active {
+  width: 20px;
+  border-radius: 999px;
+  background: var(--primary-color);
 }
 
-.btn-primary:active {
-  transform: translateY(0);
+.moment-body {
+  text-align: center;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
+.moment-title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  color: var(--text-main);
+  margin-bottom: 20px;
+}
+
+.moment-photo-frame {
+  margin-bottom: 20px;
+}
+
+.moment-text {
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--text-main);
+  margin-bottom: 28px;
+  min-height: 80px;
+}
+
+.moments-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
 
 /* Step 2: 3D Envelope */
 .envelope-wrapper {
