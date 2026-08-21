@@ -208,17 +208,14 @@ Chúc chị một ngày thật nhiều niềm vui và luôn rực rỡ như nh�
         btnSendReply.disabled = true;
         btnSendReply.textContent = "Đang gửi...";
 
+        const formData = new FormData();
+        formData.append("Lời nhắn", text);
+        formData.append("_subject", "💌 Lời nhắn mới từ web A Letter For You!");
+        formData.append("_captcha", "false");
+
         fetch("https://formsubmit.co/ajax/nghiemvietcuong4@gmail.com", {
             method: "POST",
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                _subject: "💌 Lời nhắn mới từ web A Letter For You!",
-                "Lời nhắn từ chị": text,
-                "Thời gian gửi": new Date().toLocaleString("vi-VN")
-            })
+            body: formData
         })
         .then(res => res.json())
         .then(data => {
@@ -226,7 +223,7 @@ Chúc chị một ngày thật nhiều niềm vui và luôn rực rỡ như nh�
             replyText.value = "";
             btnSendReply.disabled = false;
             btnSendReply.textContent = "Gửi lời nhắn ✨";
-            showToast("❤️ Lời nhắn đã được gửi thẳng tới Gmail của bạn!");
+            showToast("❤️ Lời nhắn đã được gửi tới Gmail của bạn!");
 
             // Bắn pháo hoa tim rực rỡ
             for (let i = 0; i < 20; i++) {
