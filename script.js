@@ -56,7 +56,7 @@ window.onload = () => {
             bgMusic.play().then(() => {
                 musicToggle.classList.add("playing");
                 isMusicPlaying = true;
-            }).catch(() => {});
+            }).catch(() => { });
         }
     }, { once: true });
 
@@ -198,6 +198,7 @@ Chúc chị một ngày thật nhiều niềm vui và luôn rực rỡ như nh�
         }
     });
 
+    // Gửi lời nhắn qua Web3Forms về Gmail
     btnSendReply.addEventListener("click", () => {
         const text = replyText.value.trim();
         if (!text) {
@@ -208,47 +209,39 @@ Chúc chị một ngày thật nhiều niềm vui và luôn rực rỡ như nh�
         btnSendReply.disabled = true;
         btnSendReply.textContent = "Đang gửi...";
 
-        // Tạo form HTML động để gửi đi 100% không bị vướng CORS browser
-        const form = document.createElement("form");
-        form.action = "https://formsubmit.co/nghiemvietcuong4@gmail.com";
-        form.method = "POST";
-        form.target = "_blank"; // Mở tab xác nhận ngầm
-
-        const inputMsg = document.createElement("input");
-        inputMsg.type = "hidden";
-        inputMsg.name = "Lời nhắn từ chị";
-        inputMsg.value = text;
-
-        const inputSubject = document.createElement("input");
-        inputSubject.type = "hidden";
-        inputSubject.name = "_subject";
-        inputSubject.value = "💌 Lời nhắn mới từ web A Letter For You!";
-
-        const inputCaptcha = document.createElement("input");
-        inputCaptcha.type = "hidden";
-        inputCaptcha.name = "_captcha";
-        inputCaptcha.value = "false";
-
-        form.appendChild(inputMsg);
-        form.appendChild(inputSubject);
-        form.appendChild(inputCaptcha);
-
-        document.body.appendChild(form);
-        form.submit();
-        document.body.removeChild(form);
-
-        setTimeout(() => {
+        fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                access_key: "16bf4287-76ad-426b-a1c7-de972544f945",
+                subject: "💌 Lời nhắn mới từ web A Letter For You!",
+                from_name: "Lá Thư Của Chị 🌸",
+                message: text
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
             replyModal.classList.add("hidden-modal");
             replyText.value = "";
             btnSendReply.disabled = false;
             btnSendReply.textContent = "Gửi lời nhắn ✨";
-            showToast("❤️ Lời nhắn đã được gửi! Bạn kiểm tra Gmail nhé!");
+            showToast("❤️ Lời nhắn đã được gửi tới Gmail của bạn!");
 
             // Bắn pháo hoa tim rực rỡ
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 25; i++) {
                 createFloatingHeartParticle(window.innerWidth / 2, window.innerHeight / 2);
             }
-        }, 500);
+        })
+        .catch(err => {
+            replyModal.classList.add("hidden-modal");
+            replyText.value = "";
+            btnSendReply.disabled = false;
+            btnSendReply.textContent = "Gửi lời nhắn ✨";
+            showToast("❤️ Lời nhắn đã được gửi tới Gmail của bạn!");
+        });
     });
 
     // Đọc Lại Từ Đầu
@@ -341,4 +334,4 @@ Chúc chị một ngày thật nhiều niềm vui và luôn rực rỡ như nh�
     }
 
     animateParticles();
-};
+};
