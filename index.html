@@ -3,42 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You</title>
+    <title>Gửi Chị - Một Bức Thư Đặc Biệt 💌</title>
+    
+    <!-- Open Graph Preview Meta Tags -->
+    <meta property="og:title" content="Chị có 1 tin nhắn quan trọng ✉️">
+    <meta property="og:description" content="Có vài điều em muốn nói với chị, nhưng em muốn nói 1 cách đặc biệt hơn một chút...">
+    <meta property="og:image" content="images/0bfc32c3-3cb8-40a9-95ee-343e0bb2cc23.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Canvas Hạt Trái Tim Bay -->
+    <canvas id="heartCanvas"></canvas>
+
+    <!-- Trình phát nhạc nền -->
+    <div class="music-player-widget">
+        <button id="musicToggle" class="music-btn" title="Bật/Tắt Nhạc Nền">
+            <span class="music-icon">🎵</span>
+            <span class="music-text">Nhạc nền</span>
+        </button>
+        <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-114876.mp3"></audio>
+    </div>
+
+    <!-- Màn 0: Khung Loading -->
     <div id="loading">
         <div class="loading-box">
-            <p class="loading-text">đang tải tin nhắn...</p>
-
+            <div class="loading-heart">💖</div>
+            <p class="loading-text">Đang tải tin nhắn dành riêng cho chị...</p>
             <div class="progress-bar">
                 <div class="progress"></div>
             </div>
-
             <p class="percent">0%</p>
         </div>
     </div>  
 
-    <main class="letter hidden">
-        <section class="page active">
-            <div class="top">
-                <p class="mail-icon">✉️</p>
-                <p class="small-text">ting ting...</p>
-            </div>
-            <div class="intro">
+    <main class="app-container hidden">
+
+        <!-- Màn 1: Trang Giới Thiệu -->
+        <section id="step1" class="page active">
+            <div class="intro-card">
+                <div class="top-icon">✉️</div>
+                <p class="small-tag">ting ting... tin nhắn mới!</p>
                 <h1>Chị có 1 tin nhắn quan trọng</h1>
                 <p class="message">
                     Có vài điều em muốn nói với chị,<br>
-                    nhưng em muốn nói 1 cách đặc biệt hơn một chút.
+                    nhưng em muốn gửi trao theo một cách đặc biệt hơn một chút... ✨
                 </p>
+                <button id="btnOpenIntro" class="btn-primary">
+                    <span>Bấm để mở thư</span>
+                    <span class="btn-icon">💌</span>
+                </button>
             </div>
-
-            <button class="next">Bấm để mở</button>
         </section>
-        
-        
+
+        <!-- Màn 2: Phong Bì Thư 3D -->
+        <section id="step2" class="page">
+            <div class="envelope-wrapper">
+                <p class="envelope-hint">✨ Nhấp vào phong bì để mở bức thư nhé ✨</p>
+                <div class="envelope" id="envelope">
+                    <div class="envelope-back"></div>
+                    <div class="letter-preview">
+                        <p class="preview-text">Gửi chị...</p>
+                    </div>
+                    <div class="envelope-top"></div>
+                    <div class="envelope-front"></div>
+                    <div class="wax-seal" id="waxSeal">
+                        <span>❤️</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Màn 3: Bức Thư Tâm Sự Chính -->
+        <section id="step3" class="page">
+            <div class="letter-paper">
+                <div class="paper-header">
+                    <span class="stamp">💌</span>
+                    <p class="letter-date">Dành riêng cho chị</p>
+                </div>
+
+                <h2 class="letter-title">Gửi chị, người rất đặc biệt... ✨</h2>
+
+                <!-- Khung ảnh Polaroid Kỷ niệm -->
+                <div class="photo-frame">
+                    <div class="tape top-tape"></div>
+                    <img src="images/0bfc32c3-3cb8-40a9-95ee-343e0bb2cc23.jpg" alt="Khoảnh khắc đáng nhớ" class="letter-photo">
+                    <p class="photo-caption">Khoảnh khắc đáng nhớ nhất 🌸</p>
+                </div>
+
+                <!-- Khung gõ chữ tâm sự (Typewriter) -->
+                <div class="typewriter-container">
+                    <div id="typewriterText" class="typewriter-text"></div>
+                    <p id="clickToSkip" class="skip-hint">(Bấm vào đoạn văn để hiện toàn bộ nhanh hơn)</p>
+                </div>
+
+                <!-- Nút Tương Tác & Phản Hồi -->
+                <div id="letterActions" class="letter-actions hidden-actions">
+                    <button id="btnHeart" class="btn-action heart-btn">
+                        <span class="heart-anim">❤️</span>
+                        <span>Thả tim (<span id="heartCount">0</span>)</span>
+                    </button>
+                    <button id="btnReply" class="btn-action reply-btn">
+                        <span>Nhắn lại cho em 💬</span>
+                    </button>
+                    <button id="btnReplay" class="btn-action replay-btn">
+                        <span>Đọc lại từ đầu 🔄</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
     </main>
-    
+
+    <!-- Modal Phản Hồi Hộp Thoại -->
+    <div id="replyModal" class="modal-backdrop hidden-modal">
+        <div class="modal-box">
+            <button id="closeModal" class="modal-close">&times;</button>
+            <h3>Gửi lời nhắn lại cho em 💌</h3>
+            <p class="modal-sub">Chị muốn nhắn điều gì với em không?</p>
+            <textarea id="replyText" placeholder="Nhập lời nhắn của chị ở đây nè..."></textarea>
+            <div class="modal-buttons">
+                <button id="btnSendReply" class="btn-primary">Gửi lời nhắn ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden-toast">❤️ Cảm ơn chị đã nhận lời nhắn!</div>
+
     <script src="script.js"></script>
 </body>
 </html>
