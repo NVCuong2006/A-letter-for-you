@@ -208,35 +208,47 @@ Chúc chị một ngày thật nhiều niềm vui và luôn rực rỡ như nh�
         btnSendReply.disabled = true;
         btnSendReply.textContent = "Đang gửi...";
 
-        const formData = new FormData();
-        formData.append("Lời nhắn", text);
-        formData.append("_subject", "💌 Lời nhắn mới từ web A Letter For You!");
-        formData.append("_captcha", "false");
+        // Tạo form HTML động để gửi đi 100% không bị vướng CORS browser
+        const form = document.createElement("form");
+        form.action = "https://formsubmit.co/nghiemvietcuong4@gmail.com";
+        form.method = "POST";
+        form.target = "_blank"; // Mở tab xác nhận ngầm
 
-        fetch("https://formsubmit.co/ajax/nghiemvietcuong4@gmail.com", {
-            method: "POST",
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
+        const inputMsg = document.createElement("input");
+        inputMsg.type = "hidden";
+        inputMsg.name = "Lời nhắn từ chị";
+        inputMsg.value = text;
+
+        const inputSubject = document.createElement("input");
+        inputSubject.type = "hidden";
+        inputSubject.name = "_subject";
+        inputSubject.value = "💌 Lời nhắn mới từ web A Letter For You!";
+
+        const inputCaptcha = document.createElement("input");
+        inputCaptcha.type = "hidden";
+        inputCaptcha.name = "_captcha";
+        inputCaptcha.value = "false";
+
+        form.appendChild(inputMsg);
+        form.appendChild(inputSubject);
+        form.appendChild(inputCaptcha);
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+
+        setTimeout(() => {
             replyModal.classList.add("hidden-modal");
             replyText.value = "";
             btnSendReply.disabled = false;
             btnSendReply.textContent = "Gửi lời nhắn ✨";
-            showToast("❤️ Lời nhắn đã được gửi tới Gmail của bạn!");
+            showToast("❤️ Lời nhắn đã được gửi! Bạn kiểm tra Gmail nhé!");
 
             // Bắn pháo hoa tim rực rỡ
             for (let i = 0; i < 20; i++) {
                 createFloatingHeartParticle(window.innerWidth / 2, window.innerHeight / 2);
             }
-        })
-        .catch(err => {
-            replyModal.classList.add("hidden-modal");
-            replyText.value = "";
-            btnSendReply.disabled = false;
-            btnSendReply.textContent = "Gửi lời nhắn ✨";
-            showToast("❤️ Lời nhắn của chị đã được gửi đi rồi đó!");
-        });
+        }, 500);
     });
 
     // Đọc Lại Từ Đầu
